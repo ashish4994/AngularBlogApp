@@ -1,0 +1,31 @@
+
+mat-card {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 1rem;
+  }
+  
+  mat-form-field {
+    width: 100%; /* Full width */
+    margin-bottom: 1rem; /* Spacing between form fields */
+  }
+  
+  .error {
+    color: #f44336; /* Red color for error messages */
+    margin-top: 0.5rem;
+  }
+  
+  .button {
+    display: flex;
+    justify-content: center; /* Align button to the right */
+    margin-top: 1rem;
+  }
+  
+  /* You can also add media queries for responsive design if needed */
+  @media (max-width: 600px) {
+    mat-card {
+      margin: 1rem;
+      padding: 0.5rem;
+    }
+  }
+  
