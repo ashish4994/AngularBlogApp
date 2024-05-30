@@ -6,16 +6,26 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatCardModule, ReactiveFormsModule,MatFormFieldModule, CommonModule,MatInputModule,MatButtonModule],
+  imports: [MatCardModule, ReactiveFormsModule,MatFormFieldModule, CommonModule,MatInputModule,MatButtonModule,HttpClientModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  providers: [AuthService]
+
 })
 export class LoginComponent {
   
+  constructor(private authService: AuthService,
+    private snackBar: MatSnackBar
+  
+   ) { }
+
   form: FormGroup = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
@@ -23,8 +33,22 @@ export class LoginComponent {
 
   submit() {
     if (this.form.valid) {
-      this.submitEM.emit(this.form.value);
-    }
+      const { username, password } = this.form.value;
+
+      this.authService.loginUser(username, password).subscribe({
+        next: (response) => {
+          this.snackBar.open('Login successful', 'Close', {
+            duration: 33000
+          }); 
+
+        },
+        error: (error) => {
+          console.error('Login failed', error);
+           this.snackBar.open('Login failed', 'Close', {
+            duration: 33000
+          });
+        }
+      });    }
   }
   @Input() error !: string | null;
 

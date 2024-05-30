@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -17,14 +19,17 @@ import { CommonModule } from '@angular/common';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatButtonModule,CommonModule],
+    MatButtonModule,CommonModule,HttpClientModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.css',
+  providers: [AuthService]
 })
 export class RegisterComponent implements OnInit {
   registerForm !: FormGroup;
   fieldRequired: string = "This field is required"
-   constructor(private auth: AuthService) { }
+   constructor(private auth: AuthService,    
+    private snackBar: MatSnackBar
+   ) { }
  
    ngOnInit() {
      this.createForm();
@@ -67,9 +72,22 @@ export class RegisterComponent implements OnInit {
      const email = formData.value.email;
      const password = formData.value.password;
      const username = formData.value.username;
-     //this.auth.registerUSer(email, password, username);
-      formDirective.resetForm();
-     if(this.registerForm)
-      this.registerForm.reset();
+     this.auth.registerUser(email, username, password).subscribe({
+      next: (response) => {
+        this.snackBar.open('Registration successful', 'Close', {
+          duration: 33000
+        });      
+        formDirective.resetForm();
+        if (this.registerForm) {
+          this.registerForm.reset();
+        }
+      },
+      error : (error) => {
+          // Handle error case
+          this.snackBar.open('Registration failed', 'Close', {
+            duration: 33000
+          });
+      }
+     })
  }
 }
