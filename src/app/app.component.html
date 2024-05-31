@@ -1,8 +1,14 @@
 <mat-toolbar color="primary">
   <span (click)="navigateToHome()" style="cursor: pointer;">Blog Application</span>
   <span class="example-spacer"></span> <!-- This will push the following elements to the right -->
-  <button mat-button (click)="navigateToLogin()">Login</button>
-  <button mat-button (click)="navigateToRegister()">Register</button>
+
+  <button mat-button *ngIf="isLoggedIn === false" (click)="navigateToLogin()">Login</button>
+  <button mat-button *ngIf="isLoggedIn === false" (click)="navigateToRegister()">Register</button>
+
+  <!-- Show these buttons if the user is authenticated -->
+  <button mat-button *ngIf="isLoggedIn === true" (click)="navigateToCreateBlog()">Create Blog</button>
+  <button mat-button *ngIf="isLoggedIn === true" (click)="navigateToViewBlogs()">View Blogs</button>
+
 </mat-toolbar>
 
 <router-outlet></router-outlet>

@@ -1,0 +1,42 @@
+<main>
+<mat-card>
+    <h1>Create Blog Post</h1>
+    <form [formGroup]="newPostForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Image URL</mat-label>
+        <input matInput formControlName="imageUrl">
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Content</mat-label>
+        <textarea matInput formControlName="content" rows="6"></textarea>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Posted By</mat-label>
+        <input matInput formControlName="postedBy">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Tags</mat-label>
+        <input matInput placeholder="Enter tags separated by commas" [formControl]="tagsControl">
+      </mat-form-field>
+      
+      <mat-chip-set>
+        <mat-chip *ngFor="let tag of tags" [removable]="removable" (removed)="remove(tag)">
+          {{ tag }}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-set>
+      
+     <div class="create-button">
+      <button  mat-raised-button color="primary" type="submit">Create Post</button>
+    </div>
+    </form>
+  </mat-card>
+</main>

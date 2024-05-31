@@ -1,0 +1,41 @@
+/* This will make the entire body a flex container, with centered content */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background: #f4f4f4;
+  }
+  
+  /* This will style the mat-card to not stretch too much */
+  mat-card {
+    width: 100%;
+    max-width: 600px; /* Adjust the max-width as needed */
+    margin: 16px;
+    padding: 16px;
+  }
+  
+  mat-form-field {
+    width: 100%;
+    margin-top: 8px;
+  }
+  
+  mat-chip-list {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  
+  mat-chip {
+    margin: 5px;
+  }
+  
+  /* Add some padding at the bottom to ensure content isn't cut off by overflow */
+  main {
+    padding-bottom: 50px;
+  }
+  
+  .create-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }

@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LoginComponent {
   
   constructor(private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   
    ) { }
 
@@ -40,7 +42,7 @@ export class LoginComponent {
           this.snackBar.open('Login successful', 'Close', {
             duration: 33000
           }); 
-
+          this.router.navigate(['/all-blogs']);
         },
         error: (error) => {
           console.error('Login failed', error);
@@ -52,5 +54,4 @@ export class LoginComponent {
   }
   @Input() error !: string | null;
 
-  @Output() submitEM = new EventEmitter();
 }
