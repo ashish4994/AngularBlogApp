@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
@@ -15,35 +15,32 @@ import { Subscription } from 'rxjs';
   imports: [CommonModule, RouterOutlet, MatToolbarModule,MatButtonModule,HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  providers: [AuthService]
+  //providers: [AuthService]
 })
 
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'my-angular-app';
   isLoggedIn: boolean = false;
 
   //isAuthenticated$ = this.authService.isAuthenticated$;
-  private authSubscription: Subscription;
+  private authSubscription: Subscription | undefined;
 
-  ngOnInit() {
-
-  }
 
   constructor(
     private authService: AuthService,
     private changeDetectorRef: ChangeDetectorRef,
     private router: Router) {
 
+     }
+
+     ngOnInit() {
       this.authSubscription = this.authService.isAuthenticated$.subscribe(
         isAuthenticated => {
           this.isLoggedIn = isAuthenticated;
-          this.changeDetectorRef.detectChanges(); 
-  
         }
       );
-
-     }
+    }
 
   navigateToRegister() {
     this.router.navigate(['/register']);
@@ -65,6 +62,13 @@ export class AppComponent {
   navigateToViewBlogs(){
     this.router.navigate(['/all-blogs']);
 
+  }
+
+  logout() {
+    // Call the logout method in your AuthService
+    this.authService.logout();
+    // Optionally navigate to the login or home page
+    this.router.navigate(['/']);
   }
 
   ngOnDestroy() {

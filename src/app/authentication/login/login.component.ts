@@ -17,10 +17,10 @@ import { Router } from '@angular/router';
   imports: [MatCardModule, ReactiveFormsModule,MatFormFieldModule, CommonModule,MatInputModule,MatButtonModule,HttpClientModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
-  providers: [AuthService]
-
 })
 export class LoginComponent {
+  authSubscription: any;
+  isLoggedIn: boolean | undefined;
   
   constructor(private authService: AuthService,
     private snackBar: MatSnackBar,
@@ -28,6 +28,14 @@ export class LoginComponent {
   
    ) { }
 
+   ngOnInit() {
+    this.authSubscription = this.authService.isAuthenticated$.subscribe(
+      isAuthenticated => {
+        this.isLoggedIn = isAuthenticated;
+      }
+    );
+  }
+  
   form: FormGroup = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),

@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -21,14 +22,15 @@ import { HttpClientModule } from '@angular/common/http';
     MatIconModule,
     MatButtonModule,CommonModule,HttpClientModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
-  providers: [AuthService]
+  styleUrl: './register.component.css'
+  
 })
 export class RegisterComponent implements OnInit {
   registerForm !: FormGroup;
   fieldRequired: string = "This field is required"
    constructor(private auth: AuthService,    
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
    ) { }
  
    ngOnInit() {
@@ -81,6 +83,8 @@ export class RegisterComponent implements OnInit {
         if (this.registerForm) {
           this.registerForm.reset();
         }
+        this.router.navigate(['/login']);
+
       },
       error : (error) => {
           // Handle error case

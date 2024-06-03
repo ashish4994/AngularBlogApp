@@ -8,6 +8,7 @@
   <!-- Show these buttons if the user is authenticated -->
   <button mat-button *ngIf="isLoggedIn === true" (click)="navigateToCreateBlog()">Create Blog</button>
   <button mat-button *ngIf="isLoggedIn === true" (click)="navigateToViewBlogs()">View Blogs</button>
+  <button mat-button *ngIf="isLoggedIn === true" (click)="logout()">Log Out</button>
 
 </mat-toolbar>
 

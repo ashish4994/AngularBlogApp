@@ -8,6 +8,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { BlogService } from '../blog.service';
 
 @Component({
   selector: 'app-create-blog',
@@ -19,10 +23,12 @@ import { CommonModule } from '@angular/common';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatChipsModule
+    MatChipsModule,
+    HttpClientModule
   ],
   templateUrl: './create-blog.component.html',
-  styleUrls: ['./create-blog.component.css']
+  styleUrls: ['./create-blog.component.css'],
+  providers: [BlogService]
   
 })
 export class CreateBlogComponent {
@@ -35,26 +41,44 @@ export class CreateBlogComponent {
   selectable = true;
   removable = true;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private blogService: BlogService,  private snackBar: MatSnackBar,
+    private router: Router) {
     this.newPostForm = this.fb.group({
       name: ['', Validators.required],
-      imageUrl: [''],
+      image_url: [''],
       content: ['', Validators.required],
-      postedBy: ['', Validators.required],
-      tags: [this.tags]
+      posted_by: ['', Validators.required],
+      tags: this.tagsControl
     });
   }
 
   onSubmit() {
     if (this.newPostForm.valid) {
-      // Process the tags input and split into an array
-      const tagsInput: string = this.newPostForm.value.tags;
-      if (tagsInput) {
-        this.tagsArray = tagsInput.split(',').map(tag => tag.trim()).filter(tag => tag.length);
-      }
 
-      console.log(this.newPostForm.value);
-      // Process your form submission here (e.g., send to backend)
+      // Process the tags input and split into an array
+      const tagsInput: string = this.tagsControl.value || ''; // Ensure it's a string
+
+      this.tags = tagsInput.split(',').map(tag => tag.trim()).filter(tag => tag.length);
+
+
+      const formData = {
+        ...this.newPostForm.value,
+        tags: this.tags
+      };
+
+      this.blogService.createPost(formData).subscribe({
+        next: (response) => {
+          this.snackBar.open('Blog Post saved successfully.', 'Close', {
+            duration: 33000
+          });      
+          this.router.navigate(['/all-blogs']);
+
+        },
+        error: (error) => {
+          console.error('Error creating post:', error);
+        }
+      });
+
     }
   }
 
