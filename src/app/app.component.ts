@@ -51,7 +51,13 @@ export class AppComponent implements OnInit {
   }
 
   navigateToHome() {
-    this.router.navigate(['/']); // Navigate to the home route
+
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/all-blogs']);
+    }else{
+      this.router.navigate(['/']); 
+
+    }
   }
 
   navigateToCreateBlog(){

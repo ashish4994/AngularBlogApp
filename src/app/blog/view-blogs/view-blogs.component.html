@@ -1,1 +1,27 @@
-You are successfully signed in. You can view blogs on this page.
+<!-- view-blogs.component.html -->
+<main class="cards-container">
+    <div *ngFor="let post of blogPosts" class="blog-post">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{ post.name }}</mat-card-title>
+        </mat-card-header>
+        <div class="card-content-container">
+        <img mat-card-image [src]="post.image_url" alt="{{ post.name }}" class="post-image">
+        <mat-card-content>
+          <p>{{ post.content | slice:0:600 }}...</p>
+        </mat-card-content>
+        </div>
+        <mat-card-actions>
+          <button mat-flat-button color="primary" class="button-style" (click)="likePost(post.id)">
+            <mat-icon>thumb_up</mat-icon> {{ 2 }}
+          </button>
+          <button mat-flat-button color="primary" class="button-style" (click)="viewLikes(post.id)">
+            <mat-icon>visibility</mat-icon> {{ 3 }}
+          </button>
+          <button mat-flat-button color="primary" (click)="viewPost(post.id)">View Post</button>
+        </mat-card-actions>
+        
+      </mat-card>
+    </div>
+  </main>
+  

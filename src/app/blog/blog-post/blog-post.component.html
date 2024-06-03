@@ -1,0 +1,47 @@
+<!-- blog-post.component.html -->
+<div *ngIf="selectedPost" class="blog-post-container">
+
+    <mat-card-header>
+        <mat-card-title class="blog-post-title">{{ selectedPost.name }}</mat-card-title>
+      </mat-card-header>
+
+    <!-- Image -->
+    <img [src]="selectedPost.image_url" alt="{{ selectedPost.name }}" class="blog-post-image">
+  
+    <!-- Content -->
+    <div class="blog-post-content">
+      <p>{{ selectedPost.content }}</p>
+    </div>
+  
+    <!-- Tags -->
+     <div class="blog-post-tags">
+      <mat-chip-set>
+        <mat-chip *ngFor="let tag of selectedPost.tags" selected>{{ tag }}</mat-chip>
+      </mat-chip-set>
+    </div> 
+  
+    <!-- Likes and Views -->
+    <div class="blog-post-actions">
+        <button mat-flat-button color="primary" class="button-style" (click)="likePost(selectedPost.id)">
+            <mat-icon>thumb_up</mat-icon> {{ 2 }}
+          </button>
+          <button mat-flat-button color="primary" class="button-style" (click)="viewPost(selectedPost.id)">
+            <mat-icon>visibility</mat-icon> {{ 3 }}
+          </button>
+    </div>
+
+  <!-- Comment Section -->
+  <div class="blog-post-comment-section">
+    <h3>Publish Your Comment</h3>
+    <form [formGroup]="commentForm" (ngSubmit)="publishComment()">
+      <mat-form-field appearance="fill" class="comment-form-field">
+        <mat-label>Content</mat-label>
+        <textarea matInput formControlName="commentContent" placeholder="Write your comment here..."></textarea>
+      </mat-form-field>
+      <div class="comment-submit-button">
+        <button mat-flat-button color="primary" type="submit">Publish Comment</button>
+      </div>
+    </form>
+  </div>
+  
+</div>  

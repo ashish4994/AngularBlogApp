@@ -5,11 +5,13 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { ViewBlogsComponent } from './blog/view-blogs/view-blogs.component';
 import { CreateBlogComponent } from './blog/create-blog/create-blog.component';
 import { authGuard } from './auth.guard';
+import { BlogPostComponent } from './blog/blog-post/blog-post.component';
 
 export const routes: Routes = [
 {path: 'register', component: RegisterComponent },
 {path: 'login', component: LoginComponent},
 {path: 'all-blogs', component: ViewBlogsComponent,  canActivate: [authGuard]},
 {path: 'create-blog', component: CreateBlogComponent, canActivate: [authGuard]},
+{path: 'blog-post/:id', component: BlogPostComponent, canActivate: [authGuard]},
 { path: '', component: HomepageComponent }
 ];

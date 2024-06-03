@@ -64,4 +64,9 @@ export class AuthService {
     return throwError(() => new Error(errorMessage));
   }
   
+  isLoggedIn(): boolean {
+    const token = localStorage.getItem('auth-token');
+    return !!token;
+  }
+
 }

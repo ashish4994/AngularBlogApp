@@ -1,0 +1,67 @@
+/* blog-post.component.css */
+.blog-post-container {
+    max-width: 800px;
+    margin: auto;
+    margin-top:10px;
+  }
+  
+  .blog-post-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+  }
+  
+  .blog-post-content {
+    margin-bottom: 20px;
+  }
+  
+  .blog-post-tags {
+    margin-bottom: 20px;
+  }
+  
+  .blog-post-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  mat-chip {
+    margin-right: 5px;
+  }
+  
+  .button-style {
+    display: flex;
+    align-items: center;
+    gap: 7px
+    }
+
+    .blog-post-title {
+    font-size: 24px; /* Set the font size to your preference */
+    font-weight: bold; /* Optional: if you want the title to be bold */
+    }
+
+
+.blog-post-comment-section {
+    border: 1px solid #dcdcdc; 
+    padding: 10px;
+    margin: 20px 0 20px 0;
+    width: 100%;
+    border-radius: 8px; 
+    background-color: #f9f9f9;
+  }
+  
+  .comment-form-field {
+    width: 100%;
+  }
+  
+  .comment-submit-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+  
+
+  .form-text{
+    width: 100%;
+  }

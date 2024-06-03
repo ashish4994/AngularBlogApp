@@ -1,0 +1,74 @@
+/* view-blogs.component.css */
+.cards-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.blog-post {
+    margin-bottom: 2rem;
+    width: 900px;
+    height: 400px;
+    margin-bottom: 5px;
+    overflow: hidden;
+  }
+  
+  .card-content-container {
+    display: flex;
+    align-items: flex-start; /* Align items to the start of the container */
+  }
+  
+  .post-image {
+    flex: 0 0 40%;
+    height: auto; /* Maintain aspect ratio */
+    width: 40%;
+    height: 200px;
+  }
+  
+  .post-content {
+    flex: 0 0 50%;
+    flex: 1; /* Take up the remaining space */
+  }
+  
+  mat-card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+  }
+  
+  mat-card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  mat-card-header {
+    align-items: center;
+  }
+  
+  mat-card-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  mat-card-content p {
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  mat-card-actions {
+    display: flex;
+    align-items: center;
+    padding-top: 1rem;
+  }
+  
+  mat-card-actions button {
+    margin-right: 0.5rem;
+  }
+  
+  mat-icon {
+    margin-right: 0.25rem;
+  }
+  
+  .button-style {
+display: flex;
+align-items: center;
+gap: 7px
+  }
