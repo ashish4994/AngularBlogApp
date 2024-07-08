@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  angular-app:
+    build: .
+    ports:
+      - "8082:8080"
+    depends_on:
+      - auth-service
+      - blog-service
+      - blog-comments-service
+      # Add other services if the Angular app depends on them
+
+  auth-service:
+    build: C:\git-projects\AuthMicroService
+    ports:
+      - "3000:3000" # Adjust if your auth service runs on a different port
+    environment:
+      - JWT_SECRET_KEY=''
+      # Add other environment variables your auth service requires
+
+  blog-service:
+    build: C:\git-projects\BlogPostMicroService
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - DB_USER=avnadmin
+      - DB_PASSWORD=
+      - DB_HOST=blog-pg-db-ashokct04-c75f.e.aivencloud.com
+      - DB_PORT=17495
+      - DB_NAME=blog-db
+      - SSL_MODE=require
+      - SSL_ROOT_CERT=
+
+  blog-comments-service:
+    build: C:\git-projects\BlogCommentsMicroService
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+      - SECRET_KEY='abcdef'
+      - DATABASE_URL=postgresql://avnadmin:xx@blog-pg-db-ashokct04-c75f.e.aivencloud.com:17495/blog-db?sslmode=require
+
+    
