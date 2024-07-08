@@ -1,0 +1,85 @@
+# Node modules
+node_modules/
+
+# Angular build output
+dist/
+
+# Editor directories and files
+.idea/
+*.sublime*
+*.swp
+*.swo
+*.swn
+*.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+bower_components/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# System Files
+*.pid
+*.pid.lock
+*.seed
+*.pid.db
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# End-to-end test artifacts
+e2e/
+
+# Compiled TypeScript files
+*.tsbuildinfo
+*.ngtypecheck.ts
+
+# Temporary files
+*.tmp
+*.temp
+*.tscache
+
+# TSLint cache
+.tslintcache
+
+# Typings
+typings/
+
+# Local npm configuration file
+.npmrc
