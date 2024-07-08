@@ -65,3 +65,16 @@
   .form-text{
     width: 100%;
   }
+
+  .snackbar-success {
+    background-color: green;
+  }
+  
+  .snackbar-error {
+    background-color: red;
+  }
+
+  .comment-card {
+    margin-bottom: 15px; /* Adjust the value as needed */
+  }
+  

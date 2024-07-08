@@ -11,6 +11,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { FormGroup, FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable, of } from 'rxjs';
+import { Comment } from '../../interfaces/comments';
 
 @Component({
   selector: 'app-blog-post',
@@ -26,8 +29,12 @@ export class BlogPostComponent {
   commentForm = new FormGroup({
     commentContent: new FormControl('')
   });
-  constructor(private route: ActivatedRoute, private blogService: BlogService) {}
- 
+
+  likesCount$: Observable<{ total_likes: number; }> = of({total_likes:0});
+  comments$: Observable<Comment[]> | undefined;
+
+  constructor(private route: ActivatedRoute, private blogService: BlogService,private snackBar: MatSnackBar) {}
+  
   ngOnInit() {
     this.blogService.blogPosts$.subscribe({
       next: (posts) => {
@@ -45,21 +52,72 @@ export class BlogPostComponent {
       }
 
     });
+
+    if (this.selectedPost) {
+      this.loadComments(this.selectedPost.id);
+      this.getLikesCount(this.selectedPost.id);
+    }
+
   }
 
-  publishComment() {
+  publishComment(postId: number) {
     // Implement the logic to handle comment publishing
     console.log('Comment content:', this.commentForm.value.commentContent);
+    let content = this.commentForm.value.commentContent;
+
+    if(content){
+      this.blogService.saveComment(postId,content).subscribe({
+        next: (response) => {
+          this.snackBar.open('Comment saved.', 'Close', {
+            duration: 33000,
+            panelClass: ['snackbar-success']
+          });     
+          //Load new comments
+          this.loadComments(postId); 
+        },
+        error: (error) => {
+          this.snackBar.open('Error saving comment.', 'Close', {
+            duration: 33000,
+            panelClass: ['snackbar-error']
+          }); 
+          console.error('Error saving comment:', error);
+        }
+    });
+
+    }
     // Clear the comment input field after publishing
     this.commentForm.reset();
   }
 
   likePost(postId: number) {
-    // Implement the logic to handle liking a post
+    this.blogService.likePost(postId).subscribe({
+      next: (response) => {
+        this.snackBar.open('Like saved successfully.', 'Close', {
+          duration: 33000,
+          panelClass: ['snackbar-success']
+        }); 
+        this.getLikesCount(postId); 
+      },
+      error: (error) => {
+        this.snackBar.open('Error saving like.', 'Close', {
+          duration: 33000,
+          panelClass: ['snackbar-error']
+        }); 
+        console.error('Error saving comment:', error);
+      }
+    });
+  }
+
+  loadComments(postId: number) {
+    this.comments$ = this.blogService.getAllCommentsForPost(postId);
   }
   
   viewPost(postId: number) {
     // Implement the logic to handle viewing a post
+  }
+
+  getLikesCount(postId: number) {
+    this.likesCount$ = this.blogService.getAllLikesCountForPost(postId);
   }
 
 }

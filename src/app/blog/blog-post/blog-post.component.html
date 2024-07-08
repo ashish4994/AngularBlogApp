@@ -23,7 +23,7 @@
     <!-- Likes and Views -->
     <div class="blog-post-actions">
         <button mat-flat-button color="primary" class="button-style" (click)="likePost(selectedPost.id)">
-            <mat-icon>thumb_up</mat-icon> {{ 2 }}
+            <mat-icon>thumb_up</mat-icon> <div *ngIf="likesCount$ | async as likesCount"> {{ likesCount.total_likes }} </div>
           </button>
           <button mat-flat-button color="primary" class="button-style" (click)="viewPost(selectedPost.id)">
             <mat-icon>visibility</mat-icon> {{ 3 }}
@@ -33,7 +33,7 @@
   <!-- Comment Section -->
   <div class="blog-post-comment-section">
     <h3>Publish Your Comment</h3>
-    <form [formGroup]="commentForm" (ngSubmit)="publishComment()">
+    <form [formGroup]="commentForm" (ngSubmit)="publishComment(selectedPost.id)">
       <mat-form-field appearance="fill" class="comment-form-field">
         <mat-label>Content</mat-label>
         <textarea matInput formControlName="commentContent" placeholder="Write your comment here..."></textarea>
@@ -43,5 +43,19 @@
       </div>
     </form>
   </div>
+
+  <!-- Comments List -->
+<div class="blog-post-comments-list">
+  <h3>Comments</h3>
+  <ng-container *ngIf="comments$ | async as comments">
+    <mat-card *ngFor="let comment of comments" class="comment-card">
+      <mat-card-header>
+        <mat-card-title>{{ comment.author }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ comment.content }}</p>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
   
 </div>  
