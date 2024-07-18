@@ -4,22 +4,28 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { BlogPost } from '../interfaces/blog-post';
 import { Comment } from '../interfaces/comments';
+import { EnvService } from '../env.service';
 
 @Injectable({
-  providedIn: 'root' // This makes the service available application-wide
+  providedIn: 'root'
 })
 
 export class BlogService {
 
   private apiUrl = environment.blogServiceApiUrl + 'api/blogposts';
+  private blogPostBaseUrl;
   //private apiUrl = 'http://localhost:8080/api/blogposts'; 
   private blogPostsSubject = new BehaviorSubject<BlogPost[]>([]);
   public blogPosts$ = this.blogPostsSubject.asObservable();
-  private commentsServiceBaseUrl = environment.commentsServiceUrl;
+  //private commentsServiceBaseUrl = environment.commentsServiceUrl;
+  private commentsServiceBaseUrl;
   private likesCountSubject = new BehaviorSubject<number>(0);
   public likesCount$ = this.likesCountSubject.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private envService : EnvService) {
+      this.blogPostBaseUrl = envService.blogServiceApiUrl;
+      this.commentsServiceBaseUrl = envService.commentsServiceUrl
+   }
 
   getTokenHeader(){
     const token = localStorage.getItem('auth-token');
@@ -30,11 +36,13 @@ export class BlogService {
   }
   createPost(postData: any): Observable<any> {
     let headers = this.getTokenHeader();
-    return this.http.post(this.apiUrl, postData, { headers});
+    const url = `${this.blogPostBaseUrl}/api/blogposts`;
+    return this.http.post(url, postData, { headers});
   }
 
   getAllPosts(): Observable<BlogPost[]> {
-    return this.http.get<BlogPost[]>(this.apiUrl).pipe(
+    const url = `${this.blogPostBaseUrl}/api/blogposts`;
+    return this.http.get<BlogPost[]>(url).pipe(
       tap({
         next: (posts) => {
           this.blogPostsSubject.next(posts); 

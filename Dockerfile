@@ -16,20 +16,32 @@ COPY . .
 # Build the application
 RUN npm run build -- --output-path=./dist/out
 
-# Stage 2: Serve the app using http-server
-FROM node:18-alpine
+# Stage 2: Serve the app using Nginx
+FROM nginx:alpine
 
-# Install http-server globally
-RUN npm install -g http-server
+# Remove the default Nginx configuration file
+RUN rm /etc/nginx/conf.d/default.conf
 
-# Set the working directory
-WORKDIR /app
+# Copy a new configuration file from your project
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Copy the built application from the build stage
-COPY --from=build /app/dist/out/browser/ ./
+# Set the working directory to Nginx asset directory
+WORKDIR /usr/share/nginx/html
 
-# Expose port 8080
-EXPOSE 8080
+# Remove default Nginx static assets
+RUN rm -rf ./*
 
-# Start http-server
-CMD ["http-server", "-p", "8080"]
+# Copy static assets from builder stage
+COPY --from=build /app/dist/out/browser .
+
+# Copy the generate-config.sh script to the container
+COPY generate-config2.sh ./
+
+# Make sure the generate-config.sh script is executable
+RUN chmod +x ./generate-config2.sh
+
+# Expose port 80 for the Nginx server
+EXPOSE 80
+
+# Then start Nginx in the foreground
+CMD ["./generate-config2.sh"]
