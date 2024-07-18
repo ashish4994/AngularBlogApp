@@ -4,12 +4,16 @@ services:
   angular-app:
     build: .
     ports:
-      - "8082:8080"
+      - "8082:80"
     depends_on:
       - auth-service
       - blog-service
       - blog-comments-service
       # Add other services if the Angular app depends on them
+    environment:
+      AUTH_API_URL: "http://localhost:3000/"
+      BLOG_SERVICE_API_URL: "http://localhost:8080/"
+      COMMENTS_SERVICE_URL: "http://localhost:5000/"
 
   auth-service:
     build: C:\git-projects\AuthMicroService
@@ -41,6 +45,6 @@ services:
       - FLASK_APP=app.py
       - FLASK_ENV=development
       - SECRET_KEY='abcdef'
-      - DATABASE_URL=postgresql://avnadmin:xx@blog-pg-db-ashokct04-c75f.e.aivencloud.com:17495/blog-db?sslmode=require
+      - DATABASE_URL=postgresql://avnadmin:pwd@blog-pg-db-ashokct04-c75f.e.aivencloud.com:17495/blog-db?sslmode=require
 
     
