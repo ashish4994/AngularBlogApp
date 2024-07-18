@@ -11,8 +11,8 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet, MatToolbarModule,MatButtonModule,HttpClientModule],
+  //standalone: true,
+  //imports: [CommonModule, RouterOutlet, MatToolbarModule,MatButtonModule,HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   //providers: [AuthService]

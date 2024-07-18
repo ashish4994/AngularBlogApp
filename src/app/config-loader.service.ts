@@ -2,12 +2,13 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigLoaderService {
-  //constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   async loadConfigWithFetch() {
     try {
@@ -35,21 +36,21 @@ export class ConfigLoaderService {
     }
   }
 
-  // loadConfig() {
-  //   // Replace 'config.json' with the path to your runtime configuration file or API endpoint
-  //   return this.http.get('/assets/config.json').pipe(
-  //     tap((config: any) => {
-  //       // Override compile-time environment variables with runtime values
-  //       if (config.authApiUrl) {
-  //         environment.authApiUrl = config.authApiUrl;
-  //       }
-  //       if (config.blogServiceApiUrl) {
-  //         environment.blogServiceApiUrl = config.blogServiceApiUrl;
-  //       }
-  //       if (config.commentsServiceUrl) {
-  //         environment.commentsServiceUrl = config.commentsServiceUrl;
-  //       }
-  //     })
-  //   );
-  // }
+  loadconfig() {
+    // replace 'config.json' with the path to your runtime configuration file or api endpoint
+    return this.http.get('/assets/config.json').pipe(
+      tap((config: any) => {
+        // override compile-time environment variables with runtime values
+        if (config.authapiurl) {
+          environment.authApiUrl = config.authapiurl;
+        }
+        if (config.blogserviceapiurl) {
+          environment.blogServiceApiUrl = config.blogserviceapiurl;
+        }
+        if (config.commentsserviceurl) {
+          environment.commentsServiceUrl = config.commentsserviceurl;
+        }
+      })
+    );
+  }
 }

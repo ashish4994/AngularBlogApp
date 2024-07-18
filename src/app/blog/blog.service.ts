@@ -4,7 +4,6 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { BlogPost } from '../interfaces/blog-post';
 import { Comment } from '../interfaces/comments';
-import { EnvService } from '../env.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +12,14 @@ import { EnvService } from '../env.service';
 export class BlogService {
 
   private apiUrl = environment.blogServiceApiUrl + 'api/blogposts';
-  private blogPostBaseUrl;
-  //private apiUrl = 'http://localhost:8080/api/blogposts'; 
+  private blogPostBaseUrl = environment.blogServiceApiUrl;
   private blogPostsSubject = new BehaviorSubject<BlogPost[]>([]);
   public blogPosts$ = this.blogPostsSubject.asObservable();
-  //private commentsServiceBaseUrl = environment.commentsServiceUrl;
-  private commentsServiceBaseUrl;
+  private commentsServiceBaseUrl = environment.commentsServiceUrl;
   private likesCountSubject = new BehaviorSubject<number>(0);
   public likesCount$ = this.likesCountSubject.asObservable();
 
-  constructor(private http: HttpClient, private envService : EnvService) {
-      this.blogPostBaseUrl = envService.blogServiceApiUrl;
-      this.commentsServiceBaseUrl = envService.commentsServiceUrl
+  constructor(private http: HttpClient) {
    }
 
   getTokenHeader(){

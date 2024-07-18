@@ -8,9 +8,9 @@ echo "Inside config.json:"
 CONFIG_PATH="$(dirname "$0")/assets/config.json"
 
 # Read environment variables or use default values
-AUTH_API_URL=${AUTH_API_URL:-"http://localhost:3002/"}
-BLOG_SERVICE_API_URL=${BLOG_SERVICE_API_URL:-"http://localhost:8082/"}
-COMMENTS_SERVICE_URL=${COMMENTS_SERVICE_URL:-"http://localhost:5002/"}
+AUTH_API_URL=${AUTH_API_URL}
+BLOG_SERVICE_API_URL=${BLOG_SERVICE_API_URL}
+COMMENTS_SERVICE_URL=${COMMENTS_SERVICE_URL}
 
 # Ensure the assets directory exists
 mkdir -p "$(dirname "$CONFIG_PATH")"

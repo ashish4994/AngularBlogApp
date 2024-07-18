@@ -11,11 +11,7 @@ import { EnvService } from '../env.service';
 
 export class AuthService {
  
-  baseApiUrl: string | undefined;
-  // private registerUrl = environment.baseApiUrl + 'register';
-  // private loginUrl = environment.baseApiUrl + 'login';
-  //private loginUrl = window.env.baseApiUrl + 'login';
-  private apiBaseUrl = environment.authApiUrl;
+  private baseApiUrl = environment.authApiUrl;
   private isAuthenticated = new BehaviorSubject<boolean>(false);
   public readonly isAuthenticated$ = this.isAuthenticated.asObservable();
 
