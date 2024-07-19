@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ConfigLoaderService {
+  config: any;
   constructor(private http: HttpClient) {}
 
   async loadConfigWithFetch() {
@@ -17,6 +18,7 @@ export class ConfigLoaderService {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const config = await response.json();
+
       // Override compile-time environment variables with runtime values
       if (config.authApiUrl) {
         environment.authApiUrl = config.authApiUrl;
@@ -41,14 +43,20 @@ export class ConfigLoaderService {
     return this.http.get('/assets/config.json').pipe(
       tap((config: any) => {
         // override compile-time environment variables with runtime values
-        if (config.authapiurl) {
-          environment.authApiUrl = config.authapiurl;
+        console.log('Loaded config :', config)
+        this.config = config;
+        if (config.authApiUrl) {
+          environment.authApiUrl = config.authApiUrl;
+          console.log('Environment auth api url');
+          console.log(environment.authApiUrl)
         }
-        if (config.blogserviceapiurl) {
-          environment.blogServiceApiUrl = config.blogserviceapiurl;
+        if (config.blogServiceApiUrl) {
+          environment.blogServiceApiUrl = config.blogServiceApiUrl;
+          console.log(environment.blogServiceApiUrl)
+
         }
-        if (config.commentsserviceurl) {
-          environment.commentsServiceUrl = config.commentsserviceurl;
+        if (config.commentsServiceUrl) {
+          environment.commentsServiceUrl = config.commentsServiceUrl;
         }
       })
     );
