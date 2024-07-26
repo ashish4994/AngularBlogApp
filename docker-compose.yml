@@ -16,35 +16,25 @@ services:
       COMMENTS_SERVICE_URL: "http://localhost:5000/"
 
   auth-service:
-    build: C:\git-projects\AuthMicroService
+    build: C:\Users\sthot\OneDrive\Documents\AuthMicroService
     ports:
       - "3000:3000" # Adjust if your auth service runs on a different port
-    environment:
-      - JWT_SECRET_KEY=''
+    env_file:
+      - C:\Users\sthot\OneDrive\Documents\AuthMicroService\.env
       # Add other environment variables your auth service requires
 
   blog-service:
-    build: C:\git-projects\BlogPostMicroService
+    build: C:\Users\sthot\OneDrive\Documents\BlogPostMicroService
     ports:
       - "8080:8080"
-    environment:
-      - PORT=8080
-      - DB_USER=avnadmin
-      - DB_PASSWORD=
-      - DB_HOST=blog-pg-db-ashokct04-c75f.e.aivencloud.com
-      - DB_PORT=17495
-      - DB_NAME=blog-db
-      - SSL_MODE=require
-      - SSL_ROOT_CERT=
+    env_file:
+      - C:\Users\sthot\OneDrive\Documents\BlogPostMicroService\.env
 
   blog-comments-service:
-    build: C:\git-projects\BlogCommentsMicroService
+    build: C:\Users\sthot\OneDrive\Documents\BlogCommentsMicroService
     ports:
       - "5000:5000"
-    environment:
-      - FLASK_APP=app.py
-      - FLASK_ENV=development
-      - SECRET_KEY='abcdef'
-      - DATABASE_URL=postgresql://avnadmin:pwd@blog-pg-db-ashokct04-c75f.e.aivencloud.com:17495/blog-db?sslmode=require
+    env_file:
+      - C:\Users\sthot\OneDrive\Documents\BlogCommentsMicroService\.env
 
     
