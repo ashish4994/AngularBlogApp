@@ -19,6 +19,9 @@ RUN npm run build -- --output-path=./dist/out
 # Stage 2: Serve the app using Nginx
 FROM nginx:alpine
 
+# Install bash and dos2unix
+RUN apk update && apk add bash dos2unix
+
 # Remove the default Nginx configuration file
 RUN rm /etc/nginx/conf.d/default.conf
 
@@ -37,11 +40,14 @@ COPY --from=build /app/dist/out/browser .
 # Copy the generate-config.sh script to the container
 COPY generate-config2.sh ./
 
+# Convert line endings to Unix format
+RUN dos2unix ./generate-config2.sh
+
 # Make sure the generate-config.sh script is executable
 RUN chmod +x ./generate-config2.sh
 
 # Expose port 80 for the Nginx server
 EXPOSE 80
 
-# Then start Nginx in the foreground
+# Start the Nginx server
 CMD ["./generate-config2.sh"]
